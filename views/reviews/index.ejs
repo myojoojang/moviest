@@ -1,0 +1,63 @@
+<%- include("../partials/header") %>
+
+<div class="container postBox">
+  <div class="row back">
+    <div class="col-md-12">
+      <h1 style="text-align: center">Reviews of <%= movie.name %></h1>
+
+      <div class="RatingBox my-5 mx-0">
+
+        <% if (movie.rating === 0) { %>
+        <h5>
+          <em>No reviews yet.</em>
+        </h5>
+        <% } else { %>
+
+        Current movie rating: <span class="fa fa-star checked"></span><strong><%= movie.rating.toFixed(2) %></strong>
+        <em>(total reviews: <%= movie.reviews.length %>)</em>
+
+      </div>
+      <h3>All reviews for this movie</h3>
+
+      <div class="row">
+        <% movie.reviews.forEach(function(review){ %>
+
+        <div class="col-md-6 blurb-box m-2">
+          <div class="row">
+            <div class="col-md-9">Review by <strong><%= review.author.username %></strong></div>
+
+            <div class="col-md-3 text-right"><%= review.rating %><span class="fa fa-star"></span></div>
+          </div>
+          <hr>
+          <%= review.text %>
+
+          <% if(currentUser && review.author.id.equals(currentUser._id)){ %>
+          <div class="d-flex mt-2">
+            <a class="btn btn-xs" href="/movies/<%=movie._id %>/reviews/<%=review._id %>/edit">Edit</a>
+            <form action="/movies/<%=movie._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-xs" value="Delete">Delete</button>
+            </form>
+          </div>
+          <% } %>
+        </div>
+      </div>
+
+      <% }); %>
+      <% } %>
+      <div class="mt-3">
+        <hr>
+        <a class="btn <% if (currentUser && movie.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>"
+          href="/movies/<%= movie._id %>/reviews/new">
+          Write a New Review</a>
+      </div>
+      <div style="margin-top: 10px;">
+        <a class="btn btn-default" href="/movies/<%= movie._id %>"><i class="fa fa-arrow-left"></i> Go
+          back</a>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Review section-->
+</div>
+<%- include("../partials/footer") %>

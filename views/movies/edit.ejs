@@ -1,0 +1,51 @@
+<%- include('../partials/header') %>
+<div class="container writeform">
+
+
+	<form method="POST" action="/movies/<%= movie._id %>?_method=PUT">
+		<div class="input-group mb-3">
+			<img src='<%= movie.poster %>'>
+			<input type="hidden" name='movie[poster]' value='<%= movie.poster %>' readonly>
+		</div>
+
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="basic-addon3">MOVIE</span>
+			</div>
+			<input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name='movie[name]'
+				value='<%= movie.name %>' readonly>
+		</div>
+
+
+
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="basic-addon3">RATING</span>
+			</div>
+			<input type="number" class="form-control" id="basic-url" aria-describedby="basic-addon3" name='movie[rating]'
+				value='<%= movie.u_rating %>' min='0.5' step='0.5' max='5.0'>
+		</div>
+
+
+
+
+		<div class="form-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text p-3" id="basic-addon3">Leave Your Review</span>
+			</div>
+			<textarea class="form-control" type='text' name='movie[description]' value='<%= movie.description %>'
+				rows="3"></textarea>
+		</div>
+
+		<div class='form-group row'>
+			<div class="col-6"></div>
+			<button class='col-6 btn btn-default btn-block'>Edit!</button>
+		</div>
+
+	</form>
+	<a href='/movies'>Go Back</a>
+</div>
+
+
+
+<%- include("../partials/footer") %>

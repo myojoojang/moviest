@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+<div class='container postBox'>
+
+
+
+	<div class="back my-5">
+		<h5 style='text-align:center;'>Add New Comment to <%= movie.name %></h5>
+		<hr>
+		<form action='/movies/<%= movie._id %>/comments' method='POST'>
+
+			<div class='form-group'>
+				<input class='form-control comment-box' type='text' name='comment[text]' placeholder='Write Your Comment!'>
+			</div>
+
+			<div class='form-group'>
+				<button class='btn btn-lg btn-block'>Submit!</button>
+			</div>
+
+		</form>
+		<a href='/movies'>Go Back</a>
+	</div>
+
+</div>
+
+<%- include("../partials/footer") %>

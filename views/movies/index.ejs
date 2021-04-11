@@ -1,0 +1,49 @@
+<%- include("../partials/header") %>
+
+
+<div class="container mainPostBox">
+	<header class="jumbotron" id="postJT">
+		<div class="container text-uppercase">
+			<h4>Do you want to recommend the movie for others?</h4>
+			<div>
+				<a class='btn btn-lg' href='movies/new'>Search And Write a Review!</a>
+			</div>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="card-columns">
+			<% movies.forEach(function(movie){ %>
+			<div class="card card-round">
+				<img class="card-img-top" src="<%= movie.poster %>" alt="Card image cap">
+				<div class="card-body">
+					<h4 class="card-title"><strong><%= movie.name %></strong></h4>
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item"><strong>Wirter's Rating</strong> <%= movie.u_rating %></li>
+					<li class="list-group-item"><strong>user's Rating</strong> <% if (movie.rating === 0) { %>
+						<em>No reviews yet.</em>
+						<% } else { %>
+						<%= movie.rating %>
+						<% } %>
+					</li>
+					<li class="list-group-item"><strong>Review</strong> <%= movie.description %></li>
+				</ul>
+
+
+				<div class="text-center">
+					<a href='/movies/<%= movie._id%>' class="btn  ">View Deatails</a>
+				</div>
+
+
+
+			</div>
+			<% }); %>
+
+		</div>
+	</div>
+
+</div>
+
+
+<%- include("../partials/footer") %>

@@ -1,0 +1,156 @@
+<%- include("../partials/header") %>
+<div class="container postBox">
+
+	<div class="media">
+		<figure class="media-left">
+			<p class="image">
+				<img class="img-responsive" src="<%= movie.poster %>" />
+			</p>
+		</figure>
+		<div class="media-content">
+			<div class="text-right">
+				<h2><%= movie.name %></h2>
+			</div>
+			<div class="text-right">
+				<%= movie.director %>
+			</div>
+			<div class="text-right">
+				<%= movie.plot %>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="RatingBox">
+		<span class="fa fa-star checked"></span><%= movie.author.username %>'s Rating : <%= movie.u_rating %>
+	</div>
+
+	<div class="back">
+		<div class="text-right">Submitted by <%= movie.author.username %>
+		</div>
+		<div>
+
+			<p><%= movie.description %></p>
+
+		</div>
+
+
+		<% if(currentUser && movie.author.id.equals(currentUser._id)){ %>
+		<div class="d-flex">
+			<a class='btn btn-xs  mr-1' href='/movies/<%= movie._id %>/edit'>Edit</a>
+
+			<form action='/movies/<%= movie._id %>?_method=DELETE' method='POST'>
+				<button class='btn'>
+					Delete
+				</button>
+			</form>
+		</div>
+
+		<% } %>
+	</div>
+
+
+	<div class="RatingBox mt-3">
+		<!--Review section-->
+		<% if (movie.rating === 0) { %>
+		<h5>
+			<em>No reviews yet.</em>
+		</h5>
+		<% } else { %>
+		<span class="fa fa-star checked"></span>users rating: <%= movie.rating %>
+		(total reviews: <%= movie.reviews.length %>)
+	</div>
+
+
+	<div class="back">
+		User Review
+		<% movie.reviews.slice(0, 5).forEach(function(review){ %>
+		<hr>
+		<strong><%= review.author.username %></strong>'s review and rating <span class="fa fa-star checked"></span>
+		<%=  review.rating %>
+
+		<div class="my-2">
+			<%= review.text %>
+		</div>
+
+
+
+		<% if(currentUser && review.author.id.equals(currentUser._id)){ %>
+		<div class="d-flex text-right">
+
+			<a class="btn btn-xs " href="/movies/<%=movie._id %>/reviews/<%=review._id %>/edit"><i
+					class="fas fa-edit"></i></a>
+			<form id="delete-form" action="/movies/<%=movie._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
+				<button class='btn'>
+					<i class="fas fa-trash"></i>
+				</button>
+			</form>
+
+			<% } %>
+
+
+			<hr>
+			<% }); %>
+
+
+
+			<div>
+				<a href="/movies/<%= movie._id %>/reviews"><i class="fa fa-search" aria-hidden="true"></i> See all
+					reviews</a>
+			</div>
+			<% } %>
+			<div>
+				<a class="btn  <% if (currentUser && movie.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>"
+					href="/movies/<%= movie._id %>/reviews/new">
+					Write a New Review</a>
+			</div>
+		</div>
+
+	</div>
+
+	<div class='container back'>
+		Comment
+		<hr>
+		<% movie.comments.forEach(function(comment){ %>
+
+
+		<div class="row">
+			<div class="col-9">
+				<strong><%= comment.author.username %> </strong>
+			</div>
+
+			<div class="col-3 d-flex">
+				<% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+
+				<a class='btn btn-xs' href='/movies/<%= movie._id %>/comments/<%= comment._id %>/edit'><i
+						class="fas fa-edit"></i></a>
+				<form class='delete-form' action='/movies/<%= movie._id %>/comments/<%= comment._id %>?_method=DELETE'
+					method='POST'>
+					<button class='btn'>
+						<i class="fas fa-trash"></i>
+					</button>
+				</form>
+				<% } %>
+			</div>
+
+
+			<p class="px-3">
+				<%= comment.text %>
+			</p>
+
+
+		</div>
+		<hr>
+		<% }) %>
+		<div>
+			<a class='btn ' href='/movies/<%= movie._id %>/comments/new'>Add New Comment</a>
+		</div>
+
+
+		<div class='text-right mt-3'>
+			<a href="/movies" class="btn ">LIST</a>
+		</div>
+	</div>
+</div>
+
+<%- include("../partials/footer") %>
